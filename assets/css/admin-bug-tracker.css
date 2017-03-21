@@ -1,0 +1,98 @@
+form.admin-add-project-form {
+    width: 100%;
+}
+.box {
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    color: #555;
+    margin-bottom: 20px;
+    margin-right: 10px;
+    padding: 20px;
+    word-wrap: break-word;
+}
+.box label {
+    float: left;
+    margin-bottom: 4px;
+    margin-right: 10px;
+    margin-top: 4px;
+    text-align: right;
+    width: 10%;
+}
+
+.box input[type="text"], .box select {
+    max-width: 100%;
+    width: 450px;
+}
+
+.box input[type="checkbox"] {
+    width:0px;
+}
+.button.button-primary.button-large {
+    margin-left: 35px;
+    margin-top: 35px;
+    width: 100px;
+}
+
+.box textarea {
+    display: block;
+    height: 240px;
+    resize: vertical;
+    width: 84%;
+}
+
+span.required::after {
+    color: #d00;
+    content: "*";
+    font-size: 1.5em;
+    font-weight: normal;
+    line-height: 0;
+    margin-left: -0.2em;
+}
+
+.div_proj_type {
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    color: #555;
+    margin-bottom: 20px;
+    margin-right: 10px;
+    padding: 20px;
+    word-wrap: break-word;
+}
+
+.div_proj_type .button-large {
+    margin-top: 0 !important;
+}
+
+.div_proj_type .input_add_pro_type {
+    width: 275px;
+}
+.notice-tracker {
+    margin-bottom: 20px;
+    padding: 10px 16px;
+    padding-left: 40px;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.msg_success {
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+  color: #fff;
+}
+.msg_error {
+    color: #D8000C;
+    background-color: #FFBABA;
+}
+
+.display_proj_type {
+    width: 275px;
+}
+.edit-proj_type {
+    background-color: #4CAF50;
+}
+.del-proj_type {
+    background-color: #f44336;
+}
+
