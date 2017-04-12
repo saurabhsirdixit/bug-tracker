@@ -68,6 +68,7 @@ class Tb_Bug_Tracker {
 		    id mediumint(9) NOT NULL AUTO_INCREMENT,
 		    ptype_key tinytext NOT NULL,
             ptype_name tinytext NOT NULL,
+            ptype_status tinytext NOT NULL,
 		    UNIQUE KEY id (id)
 	    ) $charset_collate;";
 
@@ -90,6 +91,7 @@ class Tb_Bug_Tracker {
             p_url tinytext NOT NULL,
             p_public tinytext NOT NULL,
             p_type tinytext NOT NULL,
+            p_status tinytext NOT NULL,
 		    UNIQUE KEY id (id)
 	    ) $charset_collate;";
 

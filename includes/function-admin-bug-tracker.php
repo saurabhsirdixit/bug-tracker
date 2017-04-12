@@ -23,9 +23,41 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 function get_project_type() {
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'project_type';
-	$get_project_type = $wpdb->get_results( "SELECT id, ptype_key, ptype_name FROM ".$table_name );
+	$get_project_type = $wpdb->get_results( "SELECT id, ptype_key, ptype_name, ptype_status FROM ".$table_name );
 
 	return $get_project_type;
 
 }
+
+
+    global $wpdb;
+	$table_name = $wpdb->prefix . 'project_type';
+
+if(isset($_POST['edit_row']))
+{
+ 	$proj_type_name = $_POST['add_pro_type'];
+    $proj_type_status = $_POST['add_pro_ststus'];
+
+ $wpdb->update( 
+	$table_name, 
+	array( 
+		'ptype_name' => $proj_type_name,
+        'ptype_status' => $proj_type_status,  
+	), 
+	array( 'ID' => 1 ), 
+	array( 
+		'%s',	
+		'%s'
+	), 
+	array( '%s' ) 
+);
+}
+
+/*if(isset($_POST['delete_row']))
+{
+ 	$row_no=$_POST['row_id'];
+ 	mysql_query("delete from user_detail where id='$row_no'");
+ 	echo "success";
+ 	exit();
+}*/
 ?>
