@@ -92,6 +92,8 @@ class Tb_Bug_Tracker {
             p_public tinytext NOT NULL,
             p_type tinytext NOT NULL,
             p_status tinytext NOT NULL,
+            p_assignee tinytext NOT NULL,
+            p_reporter tinytext NOT NULL,
 		    UNIQUE KEY id (id)
 	    ) $charset_collate;";
 

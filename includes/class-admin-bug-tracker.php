@@ -81,6 +81,8 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                         <th><h1>Access</h1></th>
                         <th><h1>Project type</h1></th>
                         <th><h1>Status</h1></th>
+                        <th><h1>Edit</h1></th>
+                        <th><h1>view</h1></th>
                         
                 </tr>
             </thead>';
@@ -93,7 +95,12 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                                 <td><?php echo $print->p_url; ?></td>
                                 <td><?php echo $print->p_public; ?></td>
                                 <td><?php echo $print->p_type; ?></td>
-                                <td><?php echo $print->p_status; ?></td></tr>
+                                <td><?php echo $print->p_status; ?></td>
+                                <td><?php echo $print->p_assingee; ?></td>
+                                <td><?php echo $print->p_reporter; ?></td>
+                                <td><input type="button" class="edit-proj_type" value="Edit" id="edit_'.$pro_type->id.'" /></td>
+                                <td><input type="button" class="edit-proj_type" value="View" id="edit_'.$pro_type->id.'" /></td>
+                                </tr>
                    
                    
         
@@ -147,6 +154,8 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                 $proj_public = $_POST['project_public'];
                 $proj_type = $_POST['project_type'];
                 $proj_status = $_POST['project_status'];
+                $proj_assignee = $_POST['project_status'];
+                $proj_reporter = $_POST['project_status'];
                 $proj_save = $wpdb->insert( 
                     $table_name, 
                     array( 
@@ -156,9 +165,13 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                         'p_public' =>$proj_public,
                         'p_type' =>$proj_type,
                         'p_status' =>$proj_status,
+                        'p_assignee' =>$proj_assignee,
+                        'p_reporter' =>$proj_reporter,
                     ), 
                     array( 
                         '%s', 
+                        '%s',
+                        '%s',
                         '%s',
                         '%s',
                         '%s',
