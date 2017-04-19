@@ -28,6 +28,8 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
     public static $form_options = array();
     public static $project_type = array();
     public static $project_status = array();
+    public static $project_assignee = array();
+    public static $project_reporter = array();
     public static $html         = '';
     public static $form         = '';
     public static $msg          = '';
@@ -50,7 +52,7 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
     public static function admin_menu() {
         add_menu_page('Projects', 'Manage Projects', 'manage_options', 'projects', array(__CLASS__,
             'bt_project_page'));
-         add_submenu_page('projects', 'Dashboard', 'Dashboard', 'manage_options', 'Dashboard', array(__CLASS__,
+         add_submenu_page('projects', 'Dashboard', 'Dashboard', 'manage_options', 'dashboard', array(__CLASS__,
             'bt_dashboard_page'));
         add_submenu_page('projects', 'New Project', 'New Project', 'manage_options', 'new-projects', array(__CLASS__,
             'bt_add_project_page'));
@@ -81,6 +83,8 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                         <th><h1>Access</h1></th>
                         <th><h1>Project type</h1></th>
                         <th><h1>Status</h1></th>
+                        <th><h1>Assignee</h1></th>
+                        <th><h1>Reporter</h1></th>
                         <th><h1>Edit</h1></th>
                         <th><h1>view</h1></th>
                         
@@ -96,27 +100,50 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                                 <td><?php echo $print->p_public; ?></td>
                                 <td><?php echo $print->p_type; ?></td>
                                 <td><?php echo $print->p_status; ?></td>
-                                <td><input type="button" class="edit-proj_type" value="Edit" id="edit_'.$print->id;.'" /></td>
-                                <td><a href="/?pid=<?php echo $print->id; ?>"><input type="button" class="edit-proj_type" value="View" id="view_'.$print->id;.'" /></a></td>
+                                <td><?php echo $print->p_assignee; ?></td>
+                                <td><?php echo $print->p_reporter; ?></td>
+                                <td><a href=" <?php echo get_admin_url();?>admin.php?pid=<?php echo $print->id; ?>"><input type="button" class="edit-proj_type" value="Edit" id="edit_'.$print->id;.'" /></a></td>
+                                <td><a href=" <?php echo get_admin_url();?>admin.php?page=dashboard&pid=<?php echo $print->p_key; ?>"><input type="button" class="edit-proj_type" value="View" id="view_'.$print->id;.'" /></a></td>
                                 </tr>
-                                <?php 
-                                $pid = $print->id;
-                                if($pid){
-                                    echo self::bt_view_project_page();
-                                }
-                                else{
-                                     echo bt_dashboard_page();
-
-                                }
-                               <?php echo self::bt_view_project_page();?>
-                   
-                   
-        
-                   
-            
-             <?php 
+                            }
+                             <?php 
             }
              echo'</table>';
+             
+              
+             if(isset($_GET['pid'])){
+
+                    $p = $_GET['pid'];
+                    global $wpdb;
+                    $table_name = $wpdb->prefix . 'projects';
+                    $result = $wpdb->get_results( "SELECT * FROM $table_name where p_key = '$p'");
+                    foreach ( $result as $print ) {
+                                        ?>          <tr><td><?php echo $print->id; ?></td>
+                                                    <td><?php echo $print->p_name; ?></td>
+                                                    <td><?php echo $print->p_description; ?></td>
+                                                    <td><?php echo $print->p_url; ?></td>
+                                                    <td><?php echo $print->p_public; ?></td>
+                                                    <td><?php echo $print->p_type; ?></td>
+                                                    <td><?php echo $print->p_status; ?></td>
+                                                    <td><?php echo $print->p_assignee; ?></td>
+                                                     <td><?php echo $print->p_reporter; ?></td>
+                                                    
+                                                    </tr>
+                                                    <?php 
+
+                   
+                                                     }
+                                                    // echo self:: bt_view_project_page();
+
+
+                                 }
+                                 else{
+                                     
+                                 }
+                                 
+                                  
+                               
+             
         
               
                
@@ -126,13 +153,16 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
         if ( !current_user_can( 'manage_options' ) )  {
             wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
         }
-        $pid = $_GET['pid'];
-        if(isset($_GET['pid'])){
-             
-        global $wpdb;
+                 echo $p_page = $_GET['pid']; 
+             if(isset($_GET['pid'])){
+        
+         global $wpdb;
         $table_name = $wpdb->prefix . 'projects';
+            
+             
        
-        $result = $wpdb->get_results( "SELECT * FROM $table_name where id=$pid");
+       
+        $result = $wpdb->get_results( "SELECT * FROM $table_name where p_key = '$p_page'");
         foreach ( $result as $print ) {
              ?>          <tr><td><?php echo $print->id; ?></td>
                                 <td><?php echo $print->p_name; ?></td>
@@ -141,8 +171,10 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                                 <td><?php echo $print->p_public; ?></td>
                                 <td><?php echo $print->p_type; ?></td>
                                 <td><?php echo $print->p_status; ?></td>
+                                 <td><?php echo $print->p_assignee; ?></td>
+                                  <td><?php echo $print->p_reporter; ?></td>
                                 <td><input type="button" class="edit-proj_type" value="Edit" id="edit_'.$print->id;.'" /></td>
-                                <td><a href="<?php  echo get_admin_url().php?page=Dashboard&pid=1; ?>"><input type="button" class="edit-proj_type" value="View" id="view_'.$print->id;.'" /></a></td>
+                                <td><a href="#"><input type="button" class="edit-proj_type" value="View" id="view_'.$print->id;.'" /></a></td>
                                 </tr>
                               
                    
@@ -153,13 +185,10 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
 
                    
         }
+    }
 
-        }
-        else{
-            die("not connect");
-        }
-        
-
+    
+       
 
 
 
@@ -205,20 +234,31 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                 $proj_public = $_POST['project_public'];
                 $proj_type = $_POST['project_type'];
                 $proj_status = $_POST['project_status'];
+                $proj_assignee = $_POST['project_Assignee'];
+                $proj_reporter = $_POST['project_reporter'];
+                $proj_key  = preg_replace( '/\s+/', '_', strtolower( $proj_title ) );
+                
+               
                
                 $proj_save = $wpdb->insert( 
                     $table_name, 
-                    array( 
-                        'p_name' =>$proj_title, 
+                    array(
+                        'p_key' => $proj_key,
+                        'p_name' =>$proj_title,
                         'p_description' =>$proj_desc, 
                         'p_url' =>$proj_hpage,
                         'p_public' =>$proj_public,
                         'p_type' =>$proj_type,
                         'p_status' =>$proj_status,
+                        'p_assignee' =>$proj_assignee,
+                        'p_reporter' =>$proj_reporter,
                         
                     ), 
                     array( 
                         '%s', 
+                        '%s',
+                        '%s',
+                        '%s',
                         '%s',
                         '%s',
                         '%s',
@@ -412,11 +452,11 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
             'std' => 1,
             'validate'      => 'required',
         );
-                    $project_status_data = $wpdb->get_results( "SELECT ptype_key, ptype_status FROM wp_project_type", ARRAY_A );
+                    $project_status_data = $wpdb->get_results( "SELECT ptype_status_key, ptype_status FROM wp_project_type", ARRAY_A );
 
         if( !empty( $project_status_data ) ):
             foreach( $project_status_data as $project_status_val ) {
-                $a_key = $project_status_val['ptype_key'];
+                $a_key = $project_status_val['ptype_status_key'];
                 $b_val = $project_status_val['ptype_status']; 
                 self::$project_status[$a_key] = $b_val;
                 
@@ -431,16 +471,16 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
             'type' => 'select',
             'choices' => self::$project_status,
             'id' => 'project_status',
-            'std' => 1,
+            'std' => 2,
             'validate'      => 'required',
         );
-             $project_status_data = $wpdb->get_results( "SELECT ID, user_nicename FROM wp_users", ARRAY_A );
+             $project_assignee_data = $wpdb->get_results( "SELECT ID, user_nicename FROM wp_users", ARRAY_A );
 
-        if( !empty( $project_status_data ) ):
-            foreach( $project_status_data as $project_status_val ) {
-                $a_key = $project_status_val['ID'];
-                $b_val = $project_status_val['user_nicename']; 
-                self::$project_status[$a_key] = $b_val;
+        if( !empty( $project_assignee_data ) ):
+            foreach( $project_assignee_data as $project_assignee_val ) {
+                $a_key = $project_assignee_val['user_nicename'];
+                $b_val = $project_assignee_val['user_nicename'];
+                self::$project_assignee[$a_key] = $b_val;
                 
                
 
@@ -451,32 +491,32 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
             'section' => 'form',
             'label' => esc_html__( 'Project Asignee', 'bug-tracker' ),
             'type' => 'select',
-            'choices' => self::$project_status,
+            'choices' => self::$project_assignee,
             'id' => 'project_Assignee',
-            'std' => 1,
+            'std' => 3,
             'validate'      => 'required',
         );
           
-          $project_status_data = $wpdb->get_results( "SELECT ID, user_nicename FROM wp_users", ARRAY_A );
+          $project_reporter_data = $wpdb->get_results( "SELECT ID, user_nicename FROM wp_users", ARRAY_A );
 
-        if( !empty( $project_status_data ) ):
-            foreach( $project_status_data as $project_status_val ) {
-                $a_key = $project_status_val['ID'];
-                $b_val = $project_status_val['user_nicename']; 
-                self::$project_status[$a_key] = $b_val;
+        if( !empty( $project_reporter_data ) ):
+            foreach( $project_reporter_data as $project_reporter_val ) {
+                $a_key = $project_reporter_val['user_nicename']; 
+                $b_val = $project_reporter_val['user_nicename']; 
+                self::$project_reporter[$a_key] = $b_val;
                 
                
 
             }
         endif;
         
-            self::$form_options['project_Reporter'] = array(
+            self::$form_options['project_reporter'] = array(
             'section' => 'form',
             'label' => esc_html__( 'Project Reporter', 'bug-tracker' ),
             'type' => 'select',
-            'choices' => self::$project_status,
-            'id' => 'project_Reporter',
-            'std' => 1,
+            'choices' => self::$project_reporter,
+            'id' => 'project_reporter',
+            'std' => 4,
             'validate'      => 'required',
         );  
         
@@ -496,16 +536,18 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                 $proj_type_name = $_POST['add_pro_type'];
                 $proj_type_status = $_POST['add_pro_ststus'];
                 $proj_type_key  = preg_replace( '/\s+/', '_', strtolower( $proj_type_name ) );
-                $proj_type_key  = preg_replace( '/\s+/', '_', strtolower( $proj_type_status ) );
+                $proj_status_key  = preg_replace( '/\s+/', '_', strtolower( $proj_type_status ) );
                 $proj_type_save = $wpdb->insert( 
                     $table_name, 
                     array( 
                         'ptype_key' => $proj_type_key, 
+                        'ptype_status_key' => $proj_status_key, 
                         'ptype_name' => $proj_type_name,
                         'ptype_status' => $proj_type_status, 
                     ), 
                     array( 
                         '%s', 
+                        '%s',
                         '%s',
                         '%s',
                     ) 

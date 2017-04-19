@@ -67,6 +67,7 @@ class Tb_Bug_Tracker {
         $sql = "CREATE TABLE IF NOT EXISTS $table_name (
 		    id mediumint(9) NOT NULL AUTO_INCREMENT,
 		    ptype_key tinytext NOT NULL,
+            ptype_status_key tinytext NOT NULL,
             ptype_name tinytext NOT NULL,
             ptype_status tinytext NOT NULL,
 		    UNIQUE KEY id (id)
@@ -86,6 +87,7 @@ class Tb_Bug_Tracker {
 
         $sql = "CREATE TABLE IF NOT EXISTS $table_name (
 		    id mediumint(9) NOT NULL AUTO_INCREMENT,
+            p_key tinytext NOT NULL,
 		    p_name tinytext NOT NULL,
             p_description tinytext NOT NULL,
             p_url tinytext NOT NULL,
