@@ -67,134 +67,78 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
         echo'<center><h1><span class="yellow">Bug-Tracker: A Project Management System</span></h1>
                 <h2>Powered by: <a href="http://techbrise.com" target="_blank">TechBrise Solutions</a></h2></center>';
         
-                
-
-        global $wpdb;
-        $table_name = $wpdb->prefix . 'projects';
-        $result = $wpdb->get_results( "SELECT * FROM $table_name");
-
-        echo'<table class="container">
-            <thead>
-                <tr>
-                        <th><h1>S.NO</h1></th>
-                        <th><h1>Title</h1></th>
-                        <th><h1>Description</h1></th>
-                        <th><h1>URL</h1></th>
-                        <th><h1>Access</h1></th>
-                        <th><h1>Project type</h1></th>
-                        <th><h1>Status</h1></th>
-                        <th><h1>Assignee</h1></th>
-                        <th><h1>Reporter</h1></th>
-                        <th><h1>Edit</h1></th>
-                        <th><h1>view</h1></th>
-                        
-                </tr>
-            </thead>';
-          
-                    
-            foreach ( $result as $print )   {
-                    ?>          <tr><td><?php echo $print->id; ?></td>
-                                <td><?php echo $print->p_name; ?></td>
-                                <td><?php echo $print->p_description; ?></td>
-                                <td><?php echo $print->p_url; ?></td>
-                                <td><?php echo $print->p_public; ?></td>
-                                <td><?php echo $print->p_type; ?></td>
-                                <td><?php echo $print->p_status; ?></td>
-                                <td><?php echo $print->p_assignee; ?></td>
-                                <td><?php echo $print->p_reporter; ?></td>
-                                <td><a href=" <?php echo get_admin_url();?>admin.php?pid=<?php echo $print->id; ?>"><input type="button" class="edit-proj_type" value="Edit" id="edit_'.$print->id;.'" /></a></td>
-                                <td><a href=" <?php echo get_admin_url();?>admin.php?page=dashboard&pid=<?php echo $print->p_key; ?>"><input type="button" class="edit-proj_type" value="View" id="view_'.$print->id;.'" /></a></td>
-                                </tr>
-                            }
-                             <?php 
+              if(isset($_GET['pid'])){
+                $p = $_GET['pid'];
+                global $wpdb;
+                $table_name = $wpdb->prefix . 'projects';
+                $result = $wpdb->get_results( "SELECT * FROM $table_name where p_key = '$p'");
+                foreach ( $result as $print ) {
+                    ?>  <tr><td><?php echo $print->id; ?></td>
+                        <td><?php echo $print->p_name; ?></td>
+                        <td><?php echo $print->p_description; ?></td>
+                        <td><?php echo $print->p_url; ?></td>
+                        <td><?php echo $print->p_public; ?></td>
+                        <td><?php echo $print->p_type; ?></td>
+                        <td><?php echo $print->p_status; ?></td>
+                        <td><?php echo $print->p_assignee; ?></td>
+                        <td><?php echo $print->p_reporter; ?></td>
+                         </tr>
+                    <?php
+                }
             }
-             echo'</table>';
-             
-              
-             if(isset($_GET['pid'])){
+            elseif(isset($_GET['eid'])){
+                $eid = $_GET['eid'];
+                echo '<h1>Edit Project</h1>';
+                echo '<h2>'; echo $eid; echo '</h2>';
+                self::bt_admin_add_project_form();
 
-                    $p = $_GET['pid'];
+
+            }
+                else{                   
                     global $wpdb;
                     $table_name = $wpdb->prefix . 'projects';
-                    $result = $wpdb->get_results( "SELECT * FROM $table_name where p_key = '$p'");
-                    foreach ( $result as $print ) {
-                                        ?>          <tr><td><?php echo $print->id; ?></td>
-                                                    <td><?php echo $print->p_name; ?></td>
-                                                    <td><?php echo $print->p_description; ?></td>
-                                                    <td><?php echo $print->p_url; ?></td>
-                                                    <td><?php echo $print->p_public; ?></td>
-                                                    <td><?php echo $print->p_type; ?></td>
-                                                    <td><?php echo $print->p_status; ?></td>
-                                                    <td><?php echo $print->p_assignee; ?></td>
-                                                     <td><?php echo $print->p_reporter; ?></td>
-                                                    
-                                                    </tr>
-                                                    <?php 
+                    $result = $wpdb->get_results( "SELECT * FROM $table_name");
 
-                   
-                                                     }
-                                                    // echo self:: bt_view_project_page();
+                    echo'<table class="container">
+                        <thead>
+                            <tr>
+                                    <th><h1>S.NO</h1></th>
+                                    <th><h1>Title</h1></th>
+                                    <th><h1>Description</h1></th>
+                                    <th><h1>URL</h1></th>
+                                    <th><h1>Access</h1></th>
+                                    <th><h1>Project type</h1></th>
+                                    <th><h1>Status</h1></th>
+                                    <th><h1>Assignee</h1></th>
+                                    <th><h1>Reporter</h1></th>
+                                    <th><h1>Edit</h1></th>
+                                    <th><h1>view</h1></th>
+                                    
+                            </tr>
+                        </thead>';
+                      
+                                
+                        foreach ( $result as $print )   {
+                                ?> <tr><td><?php echo $print->id; ?></td>
+                                   <td><?php echo $print->p_name; ?></td>
+                                   <td><?php echo $print->p_description; ?></td>
+                                   <td><?php echo $print->p_url; ?></td>
+                                   <td><?php echo $print->p_public; ?></td>
+                                   <td><?php echo $print->p_type; ?></td>
+                                   <td><?php echo $print->p_status; ?></td>
+                                   <td><?php echo $print->p_assignee; ?></td>
+                                   <td><?php echo $print->p_reporter; ?></td>
+                                   <td><a href=" <?php echo get_admin_url();?>admin.php?page=dashboard&eid=<?php echo $print->p_key; ?>"><input type="button" class="edit-proj_type" value="Edit" id="edit_'.$print->id;.'" /></a></td>
+                                            <td><a href=" <?php echo get_admin_url();?>admin.php?page=dashboard&pid=<?php echo $print->p_key; ?>"><input type="button" class="edit-proj_type" value="View" id="view_'.$print->id;.'" /></a></td>
+                                   </tr>
+                             }
+                             <?php 
+                        }
 
-
-                                 }
-                                 else{
-                                     
-                                 }
-                                 
-                                  
-                               
-             
-        
-              
-               
-            
-        }
-    public static function bt_view_project_page() {
-        if ( !current_user_can( 'manage_options' ) )  {
-            wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
-        }
-                 echo $p_page = $_GET['pid']; 
-             if(isset($_GET['pid'])){
-        
-         global $wpdb;
-        $table_name = $wpdb->prefix . 'projects';
-            
-             
-       
-       
-        $result = $wpdb->get_results( "SELECT * FROM $table_name where p_key = '$p_page'");
-        foreach ( $result as $print ) {
-             ?>          <tr><td><?php echo $print->id; ?></td>
-                                <td><?php echo $print->p_name; ?></td>
-                                <td><?php echo $print->p_description; ?></td>
-                                <td><?php echo $print->p_url; ?></td>
-                                <td><?php echo $print->p_public; ?></td>
-                                <td><?php echo $print->p_type; ?></td>
-                                <td><?php echo $print->p_status; ?></td>
-                                 <td><?php echo $print->p_assignee; ?></td>
-                                  <td><?php echo $print->p_reporter; ?></td>
-                                <td><input type="button" class="edit-proj_type" value="Edit" id="edit_'.$print->id;.'" /></td>
-                                <td><a href="#"><input type="button" class="edit-proj_type" value="View" id="view_'.$print->id;.'" /></a></td>
-                                </tr>
-                              
-                   
-        
-                   
-            
-             <?php 
-
-                   
+             echo'</table>';     
         }
     }
-
-    
-       
-
-
-
-    }
-
-
+   
     public static function bt_project_page() {
         if ( !current_user_can( 'manage_options' ) )  {
             wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
@@ -364,17 +308,9 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                         foreach ( $value['choices'] as $choice => $val ) {
                             $html .= '<option value="' . esc_attr( $choice ) . '">' . esc_html( $val ) . '</option>';
                         }
-
-                       
-
                         $html .= '</select></p>';
 
-                        break;
-                        
-
-                              
-            
-                   
+                        break;    
                 }
             }
 	        $html .= '<input type="submit" class="button button-primary button-large" value="Save" name="proj_submit" />';
@@ -384,9 +320,6 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
 
         echo '</div>';
         echo '</form>';
-
-
-
     }
 
 
