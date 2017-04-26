@@ -81,6 +81,10 @@ if ( ! function_exists( 'bugtracker_init' ) ) {
             $Tb_Bug_Tracker = new Tb_Bug_Tracker();
             $Tb_Bug_Tracker->project_type_table();
             $Tb_Bug_Tracker->project_table();
+            $Tb_Bug_Tracker->project_status();
+            $Tb_Bug_Tracker->project_ticket_status();
+            $Tb_Bug_Tracker->project_ticket();
+            $Tb_Bug_Tracker->project_ticket_comments();
         }
 
         global $TB_Admin_Bug_Tracker;

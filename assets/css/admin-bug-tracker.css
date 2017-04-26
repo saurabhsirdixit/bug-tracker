@@ -95,8 +95,52 @@ span.required::after {
 .del-proj_type {
     background-color: #f44336;
 }
+/* extrenal table designe */
 @charset "UTF-8";
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:300,400,700);
+
+.projtab{
+	border:thick;
+	border-color:#000;
+	}
+.div1 {
+    float: left;
+    width: 300px;
+    height: 400px;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-bottom: 1px solid #999;
+    border-right: 1px solid #999;
+    box-shadow: 0 1px 1px #cccccc;
+	padding-left:50px;
+
+}
+.div2 {
+    float: left;
+    width: 700px;
+    height: 400px;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-bottom: 1px solid #999;
+    border-right: 1px solid #999;
+    box-shadow: 0 1px 1px #cccccc;
+	padding-left:50px;
+	margin-left:20px;
+
+}
+.divticket {
+    float: left;
+    width: 1050px;
+    height: 400px;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-bottom: 1px solid #999;
+    border-right: 1px solid #999;
+    box-shadow: 0 1px 1px #cccccc;
+	padding-left:50px;
+	margin-left:26px;
+
+}
 
 .body {
   font-family: 'Open Sans', sans-serif;
@@ -158,7 +202,6 @@ span.required::after {
   display: table;
   padding: 0 0 8em 0;
 }
-
 .container td, .container th {
 	  padding-bottom: 2%;
 	  padding-top: 2%;

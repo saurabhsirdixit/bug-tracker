@@ -47,6 +47,9 @@ class Tb_Bug_Tracker {
 
         //register_activation_hook( __FILE__, array( __CLASS__, 'project_type_table' ) );
         //register_activation_hook( __FILE__, array( __CLASS__, 'project_table' ) );
+        //register_activation_hook( __FILE__, array( __CLASS__, 'project_status' ) );
+        //register_activation_hook( __FILE__, array( __CLASS__, 'project_ticket_status' ) );
+        //register_activation_hook( __FILE__, array( __CLASS__, 'project_ticket' ) );
     }
 
     public static function strip_protocol( $link ) {
@@ -67,9 +70,7 @@ class Tb_Bug_Tracker {
         $sql = "CREATE TABLE IF NOT EXISTS $table_name (
 		    id mediumint(9) NOT NULL AUTO_INCREMENT,
 		    ptype_key tinytext NOT NULL,
-            ptype_status_key tinytext NOT NULL,
             ptype_name tinytext NOT NULL,
-            ptype_status tinytext NOT NULL,
 		    UNIQUE KEY id (id)
 	    ) $charset_collate;";
 
@@ -103,5 +104,82 @@ class Tb_Bug_Tracker {
         dbDelta( $sql );
 
     }
+     public static function project_status() {
+        global $wpdb;
+
+        $table_name = $wpdb->prefix . 'projects_status';
+
+        $charset_collate = $wpdb->get_charset_collate();
+
+        $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+            id mediumint(9) NOT NULL AUTO_INCREMENT,
+            p_satuts_key tinytext NOT NULL,
+            p_status tinytext NOT NULL,
+            UNIQUE KEY id (id)
+        ) $charset_collate;";
+
+        require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+        dbDelta( $sql );
+
+    }
+    public static function project_ticket_status() {
+        global $wpdb;
+
+        $table_name = $wpdb->prefix . 'projects_ticket_status';
+
+        $charset_collate = $wpdb->get_charset_collate();
+
+        $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+            id mediumint(9) NOT NULL AUTO_INCREMENT,
+            p_ticket_key tinytext NOT NULL,
+            p_ticket_status tinytext NOT NULL,
+            UNIQUE KEY id (id)
+        ) $charset_collate;";
+
+        require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+        dbDelta( $sql );
+
+    }
+    public static function project_ticket() {
+        global $wpdb;
+
+        $table_name = $wpdb->prefix . 'projects_ticket';
+
+        $charset_collate = $wpdb->get_charset_collate();
+
+        $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+            id mediumint(9) NOT NULL AUTO_INCREMENT,
+            p_ticket_key tinytext NOT NULL,
+            p_key tinytext NOT NULL,
+            p_ticket_name tinytext NOT NULL,
+            ticket_description tinytext NOT NULL,
+            p_ticket_status tinytext NOT NULL,
+            p_ticket_assignee tinytext NOT NULL,
+            UNIQUE KEY id (id)
+        ) $charset_collate;";
+
+        require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+        dbDelta( $sql );
+
+    }
+    public static function project_ticket_comments() {
+        global $wpdb;
+
+        $table_name = $wpdb->prefix . 'project_ticket_comments';
+
+        $charset_collate = $wpdb->get_charset_collate();
+
+        $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+            id mediumint(9) NOT NULL AUTO_INCREMENT,
+            t_discription_key tinytext NOT NULL,
+            p_ticket_key tinytext NOT NULL,
+            ticket_description tinytext NOT NULL,
+            UNIQUE KEY id (id)
+        ) $charset_collate;";
+
+        require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+        dbDelta( $sql );
+    }
+
 
 }
