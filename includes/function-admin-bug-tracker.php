@@ -25,7 +25,7 @@ function get_project_type() {
 	$table_name = $wpdb->prefix . 'project_type';
 	$get_project_type = $wpdb->get_results( "SELECT id, ptype_key, ptype_name FROM ".$table_name );
 
-	return $get_project_type;
+	return $get_project_type; 
 
 }
 function get_project_status() {
