@@ -93,73 +93,97 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                         ?>  <h1><center><?php echo $print->p_name; ?></center></h1>
                             <hr/>
                             <div class="div1">
-                            <table>
-                            <TR>
-                            <TH COLSPAN="2">
-                            <H3><BR>Project Detils </H3>
-                            </TH>
-                            </TR>
-                            <tr>
-                            <tr><td> Project id:</td>
-                            <td><?php echo $print->id; ?></td></tr>
-                            <tr><td> Project name:</td>
-                            <td><?php echo $print->p_name; ?></td></tr>
-                            <tr><td> Description: </td>
-                            <td><?php echo $print->p_description; ?></td></tr>
-                            <tr><td>URL:</td>
-                            <td><?php echo $print->p_url; ?></td></tr>
-                            <tr><td> Access:</td>
-                            <td><?php echo $print->p_public; ?></td></tr>
-                            <tr><td> Project type:</td>
-                            <td><?php echo $print->p_type; ?></td></tr>
-                            <tr><td>Status:</td>
-                            <td><?php echo $print->p_status; ?></td></tr>
-                            <tr><td> Assignee:</td>
-                            <td><?php echo $print->p_assignee; ?></td></tr>
-                            <tr><td> Reporter:</td>
-                            <td><?php echo $print->p_reporter; ?></td></tr>
-                            </tr>
-                            </table>
+                                <table>
+                                    <tr>
+                                      <Th COLSPAN="2">
+                                            <h3><BR>Project Detils </h3>
+                                     </Th>  
+
+                                    </tr>
+                                    <tr>
+                                            <tr>
+                                                    <td> Project id:</td>
+                                                    <td><?php echo $print->id; ?></td>
+                                            </tr>
+                                            <tr>
+                                                    <td> Project name:</td>
+                                                    <td><?php echo $print->p_name; ?></td>
+                                            </tr>
+                                            <tr>
+                                                    <td> Description: </td>
+                                                    <td><?php echo $print->p_description; ?></td>
+                                            </tr>
+                                            <tr>
+                                                    <td>URL:</td>
+                                                    <td><?php echo $print->p_url; ?></td>
+                                            </tr>
+                                            <tr>
+                                                    <td> Access:</td>
+                                                    <td><?php echo $print->p_public; ?></td>
+                                            </tr>
+                                            <tr>
+                                                    <td> Project type:</td>
+                                                    <td><?php echo $print->p_type; ?></td>
+                                            </tr>
+                                            <tr>
+                                                    <td>Status:</td>
+                                                    <td><?php echo $print->p_status; ?></td>
+                                            </tr>
+                                            <tr>
+                                                    <td> Assignee:</td>
+                                                    <td><?php echo $print->p_assignee; ?></td>
+                                            </tr>
+                                            <tr>
+                                                    <td> Reporter:</td>
+                                                    <td><?php echo $print->p_reporter; ?></td>
+                                            </tr>
+                                    </tr>
+                                </table>
                             </div>
                             
                              
                              
                         <?php
                     }
+
                     echo'<div class ="div2">
                     <center> <h2> Projects Tickets </h2></center>
-                                <table>
-                                <tr>
+                        <table>
+                            <tr>
                                     <th>Ticket name</th>
                                     <th>Ticket Description</th>
                                     <th>Ticket Status</th>
-                                    <th> Ticket Assignee</th>
-                                </tr>';
+                                    <th>Ticket Assignee</th>
+                            </tr>';
                                  
-                     global $wpdb;
-                     $table_name = $wpdb->prefix . 'projects_ticket';
-                     $result = $wpdb->get_results( "SELECT * FROM $table_name where p_key = '$p'" );
-                     foreach ( $result as $print ) { 
+                                         global $wpdb;
+                                         $table_name = $wpdb->prefix . 'projects_ticket';
+                                         $result = $wpdb->get_results( "SELECT * FROM $table_name where p_key = '$p'" );
+                                         foreach ( $result as $print ) { 
 
-                               ?>
-                               <tr>
-                                 <td><?php echo $print->p_ticket_name; ?></td>
-                                 <td><?php echo $print->ticket_description; ?></td>
-                                 <td><?php echo $print->p_ticket_status; ?></td>
-                                 <td><?php echo $print->p_ticket_assignee; ?></td>
-                                 <td><a href=" <?php echo get_admin_url();?>admin.php?page=projects&pid=<?php echo $print->p_key;?>&tvid=view ticket"><input type="button" class="edit-proj_type" value="View Ticket" id="view_'.$print->id;.'" /></td>
-                             </tr>
-                            <?php
-                        }
-                        ?>
+                                                   ?>
+                                                   <tr>
+                                                        <td><?php echo $print->p_ticket_name; ?></td>
+
+                                                        <td><?php echo $print->ticket_description; ?></td>
+
+                                                        <td><?php echo $print->p_ticket_status; ?></td>
+
+                                                        <td><?php echo $print->p_ticket_assignee; ?></td>
+
+                                                        <td><a href=" <?php echo get_admin_url();?>admin.php?page=projects&pid=<?php echo $print->p_key;?>&tvid=view ticket"><input type="button" class="edit-proj_type" value="View Ticket" id="view_'.$print->id;.'" /></td>
+                                                    </tr>
+                                                <?php
+                                            }
+                                            ?>
                             
                         </table>
                         
-                          <a href=" <?php echo get_admin_url();?>admin.php?page=projects&pid=<?php echo $print->p_key;?>&tid=add ticket"><input type="button" class="edit-proj_type" value="Add New Tickets" id="view_'.$print->id;.'" /></a> 
-                          </div>
-            <?php
+                            <a href=" <?php echo get_admin_url();?>admin.php?page=projects&pid=<?php echo $print->p_key;?>&tid=add ticket"><input type="button" class="edit-proj_type" value="Add New Tickets" id="view_'.$print->id;.'" /></a> 
+                        </div>
+                     <?php
 
-                    }
+                }
                     
 
                 /* Edit project pages */
@@ -191,25 +215,40 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                                 </tr>
                             </thead>';
                             foreach ( $result as $print )   {
-                                    ?> <tr><td><?php echo $print->id; ?></td>
-                                       <td><?php echo $print->p_name; ?></td>
-                                       <td><?php echo $print->p_description; ?></td>
-                                       <td><?php echo $print->p_url; ?></td>
-                                       <td><?php echo $print->p_public; ?></td>
-                                       <td><?php echo $print->p_type; ?></td>
-                                       <td><?php echo $print->p_status; ?></td>
-                                       <td><?php echo $print->p_assignee; ?></td>
-                                       <td><?php echo $print->p_reporter; ?></td>
-                                       <td><a href=" <?php echo get_admin_url();?>admin.php?page=projects&eid=<?php echo $print->p_key; ?>"><input type="button" class="edit-proj_type" value="Edit" id="edit_'.$print->id;.'" /></a></td>
-                                                <td><a href=" <?php echo get_admin_url();?>admin.php?page=projects&pid=<?php echo $print->p_key; ?>"><input type="button" class="edit-proj_type" value="View" id="view_'.$print->id;.'" /></a></td>
-                                       </tr>
+                                    ?> 
+                                    <tr>
+                                            <td><?php echo $print->id; ?></td>
+
+                                            <td><?php echo $print->p_name; ?></td>
+
+                                            <td><?php echo $print->p_description; ?></td>
+
+                                            <td><?php echo $print->p_url; ?></td>
+
+                                            <td><?php echo $print->p_public; ?></td>
+
+                                            <td><?php echo $print->p_type; ?></td>
+
+                                            <td><?php echo $print->p_status; ?></td>
+
+                                            <td><?php echo $print->p_assignee; ?></td>
+
+                                            <td><?php echo $print->p_reporter; ?></td>
+
+                                            <td><a href=" <?php echo get_admin_url();?>admin.php?page=projects&eid=<?php echo $print->p_key; ?>"><input type="button" class="edit-proj_type" value="Edit" id="edit_'.$print->id;.'" /></a></td>
+
+                                            <td><a href=" <?php echo get_admin_url();?>admin.php?page=projects&pid=<?php echo $print->p_key; ?>"><input type="button" class="edit-proj_type" value="View" id="view_'.$print->id;.'" /></a></td>
+                                    </tr>
                                   <?php 
                                    }
                                }
-                               echo'</table>';     
-                                } 
+
+                        echo'</table>';     
+                        } 
                  }
     }
+    /* Viwe ticket page*/
+
     public static function bt_view_ticket_pages() {
         if( !current_user_can( 'manage_options' ) ) {
             wp_die( __( 'you do not have sufficient permission to  access this page.' ) );
@@ -221,19 +260,61 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                      $result = $wpdb->get_results( "SELECT * FROM $table_name where p_key = '$pid'" );
                      foreach ( $result as $print ) { 
 
-                               ?> <hr/><div class ="divticket"><center> <h2> Projects Ticket:- <?php echo $print->p_ticket_key; ?> </h2></center>
-                                  <table>
-                                 <tr>
-                                 <td><?php echo $print->p_ticket_name; ?></td>
-                                 <td><?php echo $print->ticket_description; ?></td>
-                                 <td><?php echo $print->p_ticket_status; ?></td>
-                                 <td><?php echo $print->p_ticket_assignee; ?></td>
-                                 </tr>
+                               ?> <hr/>
+                            <div class ="divticket"><center> <h2> Projects Ticket:- <?php echo $print->p_ticket_key; ?> </h2></center>
+
+                                 <div class="div1">
+                                    <table>
+                                        <Th COLSPAN="2">
+                                           <h3>Ticket Detils </h3>
+                                         </Th>
+                                        
+                                        <tr>
+                                            <tr>
+                                                    <td> Project id:</td>
+                                                    <td><?php echo $print->id; ?></td>
+                                            </tr>
+                                            <tr>
+                                                    <td> Project name:</td>
+                                                    <td><?php echo $print->p_ticket_name; ?></td>
+                                            </tr>
+                                            <tr>
+                                                    <td> Description: </td>
+                                                    <td><?php echo $print->ticket_description;; ?></td>
+                                            </tr>
+                                        </tr>
                                  </table>
-                                 </div>
-                                 <?php
+                             </div>
+                             <div class="">
+                             <?php 
+                             self:: bt_view_comments();
+                             ?>    
+                            </div>
+                        </div>
+                          <?php
     }
 }
+            /** View ticket page end**/
+ /* function View comment */
+    public static function bt_view_comments(){
+        if( !current_user_can( 'manage_options' ) ){
+            wp_die( __( 'you do not have sufficient permission to access this page.' ) );
+        }
+        echo"you can view the comment here";
+    }
+
+
+ /* End function view comment */ 
+
+ /* Function add comments */
+    Public static function bt_add_comments(){
+        if( !current_user_can( 'manage_options' ) ){
+            wp_die( __ ( ' you do not have sufficient permission to access this page.' ) ); 
+        }
+        echo "Here you can add new commnets";
+
+    } 
+ /* End function add comments*/          
     public static function bt_add_ticket_page() {
         if( !current_user_can( 'manage_options' ) ) {
             wp_die( __( 'You do not have sufficient permission to access this page.' ) );
