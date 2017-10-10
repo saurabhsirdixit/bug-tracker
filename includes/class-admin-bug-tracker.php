@@ -53,9 +53,9 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
 
     public static function admin_menu() {
         add_menu_page('Projects', 'Manage Projects', 'manage_options', 'projects', array(__CLASS__,
-            'bt_project_page'));
-         add_submenu_page('projects', 'Dashboard', 'Dashboard', 'manage_options', 'dashboard', array(__CLASS__,
             'bt_dashboard_page'));
+         /*add_submenu_page('projects', 'Dashboard', 'Dashboard', 'manage_options', 'dashboard', array(__CLASS__,
+            'bt_dashboard_page'));*/
         add_submenu_page('projects', 'New Project', 'New Project', 'manage_options', 'new-projects', array(__CLASS__,
             'bt_add_project_page'));
         add_submenu_page('projects', 'Project Type', 'Project Type', 'manage_options', 'project-type', array(__CLASS__,
@@ -74,13 +74,15 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                         echo $tvid;
                         echo self::bt_view_ticket_pages();
                     }
+
                else{
                if( isset( $_GET['tid'] ) ) {
                         $tid = $_GET['tid'];
                         echo $tid;
                         echo self::bt_add_ticket_page();
                     }
-                    else{
+
+                else{
                         /* View projects pages */
                   if( isset( $_GET['pid'] ) ) {
                     $p = $_GET['pid'];
@@ -124,34 +126,41 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                              
                         <?php
                     }
+                    echo'<div class ="div2">
+                    <center> <h2> Projects Tickets </h2></center>
+                                <table>
+                                <tr>
+                                    <th>Ticket name</th>
+                                    <th>Ticket Description</th>
+                                    <th>Ticket Status</th>
+                                    <th> Ticket Assignee</th>
+                                </tr>';
+                                 
                      global $wpdb;
                      $table_name = $wpdb->prefix . 'projects_ticket';
                      $result = $wpdb->get_results( "SELECT * FROM $table_name where p_key = '$p'" );
                      foreach ( $result as $print ) { 
 
-                               ?> <div class ="div2"><center> <h2> Projects Tickets </h2></center>
-                                  <table>
-                                 <tr>
+                               ?>
+                               <tr>
                                  <td><?php echo $print->p_ticket_name; ?></td>
                                  <td><?php echo $print->ticket_description; ?></td>
                                  <td><?php echo $print->p_ticket_status; ?></td>
                                  <td><?php echo $print->p_ticket_assignee; ?></td>
-                                 <td><a href=" <?php echo get_admin_url();?>admin.php?page=dashboard&pid=<?php echo $print->p_key;?>&tvid=view ticket"><input type="button" class="edit-proj_type" value="View Ticket" id="view_'.$print->id;.'" /></td>
-                                 </tr>
-                                  </table>
-                              
-                                   <a href=" <?php echo get_admin_url();?>admin.php?page=dashboard&pid=<?php echo $print->p_key;?>&tid=add ticket"><input type="button" class="edit-proj_type" value="Add New Tickets" id="view_'.$print->id;.'" />
-                             </div>
+                                 <td><a href=" <?php echo get_admin_url();?>admin.php?page=projects&pid=<?php echo $print->p_key;?>&tvid=view ticket"><input type="button" class="edit-proj_type" value="View Ticket" id="view_'.$print->id;.'" /></td>
+                             </tr>
                             <?php
                         }
+                        ?>
+                            
+                        </table>
+                        
+                          <a href=" <?php echo get_admin_url();?>admin.php?page=projects&pid=<?php echo $print->p_key;?>&tid=add ticket"><input type="button" class="edit-proj_type" value="Add New Tickets" id="view_'.$print->id;.'" /></a> 
+                          </div>
+            <?php
+
                     }
                     
-
-
-                        
-
-                
-
 
                 /* Edit project pages */
                 elseif( isset( $_GET['eid'] ) ){
@@ -191,8 +200,8 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                                        <td><?php echo $print->p_status; ?></td>
                                        <td><?php echo $print->p_assignee; ?></td>
                                        <td><?php echo $print->p_reporter; ?></td>
-                                       <td><a href=" <?php echo get_admin_url();?>admin.php?page=dashboard&eid=<?php echo $print->p_key; ?>"><input type="button" class="edit-proj_type" value="Edit" id="edit_'.$print->id;.'" /></a></td>
-                                                <td><a href=" <?php echo get_admin_url();?>admin.php?page=dashboard&pid=<?php echo $print->p_key; ?>"><input type="button" class="edit-proj_type" value="View" id="view_'.$print->id;.'" /></a></td>
+                                       <td><a href=" <?php echo get_admin_url();?>admin.php?page=projects&eid=<?php echo $print->p_key; ?>"><input type="button" class="edit-proj_type" value="Edit" id="edit_'.$print->id;.'" /></a></td>
+                                                <td><a href=" <?php echo get_admin_url();?>admin.php?page=projects&pid=<?php echo $print->p_key; ?>"><input type="button" class="edit-proj_type" value="View" id="view_'.$print->id;.'" /></a></td>
                                        </tr>
                                   <?php 
                                    }
@@ -410,7 +419,8 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
         echo '</form>';
     }
 
-    /* ticket from */
+    /*  Add ticket from */
+
     public static function bt_admin_add_ticket_form() {
         global $wpdb;
         $table_name = $wpdb->prefix . 'projects_ticket';
@@ -451,7 +461,7 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                     self::$msg          = 'Something went wrong. Please try again.';
                     self::$msg_class    = 'error';
                 } else {
-                    self::$msg          = 'Added new project!!';
+                    self::$msg          = 'Added new Ticket!!';
                     self::$msg_class    = 'success';
                 }
             }
