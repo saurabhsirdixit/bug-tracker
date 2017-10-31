@@ -172,6 +172,8 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                                                         <td><?php echo $print->p_ticket_assignee; ?></td>
 
                                                         <td><a href=" <?php echo get_admin_url();?>admin.php?page=projects&pid=<?php echo $print->p_key;?>&tvid=view ticket"><input type="button" class="edit-proj_type" value="View Ticket" id="view_'.$print->id;.'" /></td>
+
+                                                        <td><a href=" <?php echo get_admin_url();?>admin.php?page=projects&pid=<?php echo $print->p_key;?>&tvid=edit ticket"><input type="button" class="edit-proj_type" value="Edit Ticket" id="edit_'.$print->id;.'" /></td>
                                                     </tr>
                                                 <?php
                                             }
