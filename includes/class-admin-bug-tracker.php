@@ -945,7 +945,13 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                 }
             }
         }
-
+        echo'<div id="statictabs" class="tabs">
+        <ul>
+            <li><a class="" href="#statictabs-1">Add Project Type</a></li>
+            <li><a class="" href="#statictabs-2">Add Project Status</a></li>
+            <li><a class="" href="#statictabs-3">Add ticket status</a></li>
+        </ul>';
+        echo'<div id="statictabs-1" >';
         echo '<form method="post" class="add_project_type">';
             echo '<div class="notice-tracker msg_'.self::$msg_class.'" ><span>'.self::$msg.'</span></div>';
             echo '<div class="div_proj_type">';
@@ -972,8 +978,10 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                 echo '</div>';
             echo '</div>';
         echo '</form>';
+        echo '</div>';
 
         /* project status from */
+        echo'<div id="statictabs-2">';
         echo'<h1>Add Project Status</h1>';
         echo '<form method="post" class="add_project_type">';
             echo '<div class="notice-tracker msg_'.self::$msg_class.'" ><span>'.self::$msg.'</span></div>';
@@ -1001,8 +1009,10 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                 echo '</div>';
             echo '</div>';
         echo '</form>';
+        echo '</div>';
 
         /* ticket status from*/
+        echo'<div id="statictabs-3">';
         echo'<h1>Add ticket status</h1>';
         echo '<form method="post" class="add_project_ticket">';
             echo '<div class="notice-tracker msg_'.self::$msg_class.'" ><span>'.self::$msg.'</span></div>';
@@ -1028,16 +1038,26 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                 echo '</div>';
             echo '</div>';
         echo '</form>';
+        echo '</div>';
+        echo '</dv>';
     }
     /* Register Stylesheet */
     public static function styles() {
         wp_register_style( 'tb-bug-tracker-form', parent::$plugin_assets . 'css/admin-bug-tracker.css' );
+        wp_register_style( 'tb-bug-tracker-form-1', parent::$plugin_assets . 'css/custom-admin.css' );
         wp_enqueue_style( 'tb-bug-tracker-form' );
+        wp_enqueue_style( 'tb-bug-tracker-form-1' );
     }
 
     /* Register Script files */
     public static function scripts() {
         wp_register_script( 'tb-bug-tracker-form-script', parent::$plugin_assets . 'js/admin-bug-tracker.js' );
+        wp_register_script( 'tb-bug-tracker-form-script-1', parent::$plugin_assets . 'js/._jquery.min.js' );
+        wp_register_script( 'tb-bug-tracker-form-script-2', parent::$plugin_assets . 'js/custom-admin.js' );
+        wp_register_script( 'tb-bug-tracker-form-script-3', parent::$plugin_assets . 'js/jquery.min.js' );
         wp_enqueue_script( 'tb-bug-tracker-form-script' );
+        wp_enqueue_script( 'tb-bug-tracker-form-script-1' );
+        wp_enqueue_script( 'tb-bug-tracker-form-script-2' );
+        wp_enqueue_script( 'tb-bug-tracker-form-script-3' );
     }
 }
