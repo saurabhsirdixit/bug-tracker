@@ -258,43 +258,45 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
         echo "here you can see the  ticket detalis";
         $pid = $_GET['pid'];
         global $wpdb;
-                     $table_name = $wpdb->prefix . 'projects_ticket';
-                     $result = $wpdb->get_results( "SELECT * FROM $table_name where p_key = '$pid'" );
-                     foreach ( $result as $print ) { 
+        $table_name = $wpdb->prefix . 'projects_ticket';
+        $result = $wpdb->get_results( "SELECT * FROM $table_name where p_key = '$pid'" );
+            foreach ( $result as $print ) { 
 
-                               ?> <hr/>
-                            <div class ="divticket"><center> <h2> Projects Ticket:- <?php echo $print->p_ticket_key; ?> </h2></center>
+                        ?> <hr/>
+                        <div class ="divticket"><center> <h2> Projects Ticket:- <?php echo $print->p_ticket_key; ?> </h2></center>
 
-                                 <div class="div1">
-                                    <table>
-                                        <Th COLSPAN="2">
-                                           <h3>Ticket Detils </h3>
-                                         </Th>
+                             <div class="div1">
+                                <table>
+                                    <Th COLSPAN="2">
+                                        <h3>Ticket Detils </h3>
+                                    </Th>
+                                        
                                         
                                         <tr>
-                                            <tr>
-                                                    <td> Project id:</td>
-                                                    <td><?php echo $print->id; ?></td>
-                                            </tr>
-                                            <tr>
-                                                    <td> Project name:</td>
-                                                    <td><?php echo $print->p_ticket_name; ?></td>
-                                            </tr>
-                                            <tr>
-                                                    <td> Description: </td>
-                                                    <td><?php echo $print->ticket_description;; ?></td>
-                                            </tr>
+                                                <td> ticket id:</td>
+                                                <td><?php echo $print->id; ?></td>
                                         </tr>
-                                 </table>
+                                        <tr>
+                                                <td> Ticket name:</td>
+                                                <td><?php echo $print->p_ticket_name; ?></td>
+                                        </tr>
+                                        <tr>
+                                                <td> Description: </td>
+                                                <td><?php echo $print->ticket_description;; ?></td>
+                                        </tr>
+                                </table>
                              </div>
-                             <div class="">
+                         
+                             <div style="float:right;" class="">
                              <?php 
                              self:: bt_view_comments();
+
                              ?>    
                             </div>
                         </div>
                           <?php
-    }
+                      }
+    
 }
             /** View ticket page end**/
  /* function View comment */
@@ -302,7 +304,9 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
         if( !current_user_can( 'manage_options' ) ){
             wp_die( __( 'you do not have sufficient permission to access this page.' ) );
         }
-        echo"you can view the comment here";
+        echo"you can view the comment here and ";
+        self::bt_add_comments();
+
     }
 
 
@@ -313,10 +317,67 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
         if( !current_user_can( 'manage_options' ) ){
             wp_die( __ ( ' you do not have sufficient permission to access this page.' ) ); 
         }
-        echo "Here you can add new commnets";
+        global $wpdb;
+        $p_ticket_name= 'p_ticket_name';
+        $table_name = $wpdb->prefix . 'project_ticket_comments';
+
+
+        if( isset( $_POST['comment_submit'] ) ) {
+            $ticket_comments    = $_POST['ticket_comments'];
+
+
+            $proj_save = $wpdb->insert( 
+                    $table_name, 
+                    array(
+                        't_discription_key'     => '',
+                        'p_ticket_key'          => $p_ticket_name,
+                        'ticket_description'    => $ticket_comments, 
+                        ), 
+                    array( 
+                        '%s', 
+                        '%s',
+                        '%s',
+                        ) 
+                );
+
+                if ( $proj_save === false ) {
+                    self::$msg          = 'Something went wrong. Please try again.';
+                    self::$msg_class    = 'error';
+                } else {
+                    self::$msg          = 'Added new ticket!!';
+                    self::$msg_class    = 'success';
+                }
+        }
+        echo "you can add new commnets";
+        echo '<div class="notice-tracker msg_'.self::$msg_class.'" ><span>'.self::$msg.'</span></div>';
+        echo '<form method="post" class="" >';
+        echo '<div class="">';
+        $form_box = self::bt_admin_commment_input();
+        $html = '';
+        $data = '';
+        if ( !empty ( $form_box ) ) {
+            foreach ( $form_box as $form => $value ) {
+
+                switch ( $value['type'] ) {
+                    case 'textarea':
+                        $html .= '<p><label class = "label_textarea label">' . $value['label'] . '</label>';
+                        $html .= '<span class="'.$value['validate'].'"></span>';
+                        $html .= '<textarea id="' . esc_attr( $value['id'] ) . '" rows="5" cols="100" name="' . esc_attr(
+                                $value['id'] ) . '" placeholder="' . esc_attr( $value['placeholder'] ) . '" 
+                                class="form-textarea">' . $data . '</textarea></p>'. "\n";
+                        break;
+
+                }
+            }
+            $html .= '<input type="submit" class="button button-primary button-large commentb" value="Add Comment" name="comment_submit" />';
+            echo $html;
+        }
+        echo '</div>';
+        echo '</form>';
 
     } 
- /* End function add comments*/          
+ /* End function add comments*/ 
+
     public static function bt_add_ticket_page() {
         if( !current_user_can( 'manage_options' ) ) {
             wp_die( __( 'You do not have sufficient permission to access this page.' ) );
@@ -856,6 +917,23 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
           
           return self::$form_options;
      }
+
+     /* comments input fields*/
+     public static function bt_admin_commment_input(){
+        global $wpdb;
+        self::$form_options['ticket_comments'] = array(
+            'section'       => 'form',
+            'id'            => 'ticket_comments',
+            'label'         => esc_html__( '', 'bug-tracker' ),
+            'type'          => 'textarea',
+            'validate'      => '',
+            'placeholder'   => esc_html__( 'Here add More Ticket comments....', 'bug-tracker' ),
+        );
+         return self::$form_options;
+
+
+     }
+     /* comments inputs fields end*/ 
 
     /***********************************************************************************************************************************/
 

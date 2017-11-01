@@ -249,4 +249,8 @@ span.required::after {
 .container td:nth-child(4),
 .container th:nth-child(4) { display: none; }
 }
+.commentb{
+	margin-top:-14px !important;
+    margin-left: 2px !important;
+}
 
