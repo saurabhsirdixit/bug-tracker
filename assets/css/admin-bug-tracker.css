@@ -253,4 +253,16 @@ span.required::after {
 	margin-top:-14px !important;
     margin-left: 2px !important;
 }
+.div3 {
+    float: left;
+    width: 100%;
+    height: 400px;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-bottom: 1px solid #999;
+    border-right: 1px solid #999;
+    box-shadow: 0 1px 1px #cccccc;
+    padding-left: 50px;
+    margin-top:1%;
+}
 

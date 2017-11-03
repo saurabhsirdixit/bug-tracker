@@ -183,8 +183,31 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                         
                             <a href=" <?php echo get_admin_url();?>admin.php?page=projects&pid=<?php echo $print->p_key;?>&tid=add ticket"><input type="button" class="edit-proj_type" value="Add New Tickets" id="view_'.$print->id;.'" /></a> 
                         </div>
-                     <?php
+                        <div class="div3">
+                            <h2> Project peoples:-</h2>
+                            <p> Here details of people related to this project</p>
+                            <h4> Project Reporter:-</h4><?php echo $print->p_reporter; ?>
+                            <h4> Project Assignee:-</h4><?php echo $print->p_assignee; ?>
+                        </div>
+                         <div class="div3">
+                            <h2> Project Description:-</h2>
+                            <p> Hrer Description abuot project.</p>
+                            <?php echo $print->p_description; ?>
+                        </div>
+                        <div class="div3">
+                            <h2> Project commnets:-</h2>
+                            <p>commnets of projects will be here.</p>
+                        </div>
+                        <div class="div3">
+                            <h2> Project Attachments:-</h2>
+                            <p>Project file Attachments will be  here.</p>
+                        </div>
+                        <div class="div3">
+                            <h2> Project Current Branch:-</h2>
+                            <p>Here branch name where is the current development is gooing.</p>
+                        </div>
 
+                     <?php
                 }
                     
 
@@ -284,7 +307,7 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                                                 <td> Description: </td>
                                                 <td><?php echo $print->ticket_description;; ?></td>
                                         </tr>
-                                </table>
+                                 </table>
                              </div>
                          
                              <div style="float:right;" class="">
@@ -318,8 +341,14 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
             wp_die( __ ( ' you do not have sufficient permission to access this page.' ) ); 
         }
         global $wpdb;
-        $p_ticket_name= 'p_ticket_name';
         $table_name = $wpdb->prefix . 'project_ticket_comments';
+        /*$result = $wpdb->get_results( "SELECT 'p_ticket_name' FROM $table_name where p_key = '$pid'");
+         foreach ( $result as $print ) {
+            echo $print;
+         }*/
+        $p_ticket_name= 'p_ticket_name';
+        //echo $result; 
+        
 
 
         if( isset( $_POST['comment_submit'] ) ) {
@@ -369,7 +398,7 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
 
                 }
             }
-            $html .= '<input type="submit" class="button button-primary button-large commentb" value="Add Comment" name="comment_submit" />';
+            $html .= '<input type="submit" id="comment" class="button button-primary button-large commentb" value="Add Comment" name="comment_submit" />';
             echo $html;
         }
         echo '</div>';
@@ -926,7 +955,7 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
             'id'            => 'ticket_comments',
             'label'         => esc_html__( '', 'bug-tracker' ),
             'type'          => 'textarea',
-            'validate'      => '',
+            'validate'      => 'required',
             'placeholder'   => esc_html__( 'Here add More Ticket comments....', 'bug-tracker' ),
         );
          return self::$form_options;
@@ -1135,9 +1164,11 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
         wp_register_script( 'tb-bug-tracker-form-script-1', parent::$plugin_assets . 'js/._jquery.min.js' );
         wp_register_script( 'tb-bug-tracker-form-script-2', parent::$plugin_assets . 'js/custom-admin.js' );
         wp_register_script( 'tb-bug-tracker-form-script-3', parent::$plugin_assets . 'js/jquery.min.js' );
+        wp_register_script( 'tb-bug-tracker-form-script-4', parent::$plugin_assets . 'js/bt_ajax.js' );
         wp_enqueue_script( 'tb-bug-tracker-form-script' );
         wp_enqueue_script( 'tb-bug-tracker-form-script-1' );
         wp_enqueue_script( 'tb-bug-tracker-form-script-2' );
         wp_enqueue_script( 'tb-bug-tracker-form-script-3' );
+         wp_enqueue_script( 'tb-bug-tracker-form-script-4' );
     }
 }
