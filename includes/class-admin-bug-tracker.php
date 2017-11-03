@@ -459,8 +459,7 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                 
                
                
-                $proj_save = $wpdb->insert( 
-                    $table_name, 
+                $proj_save = wp_insert_post(
                     array(
                         'p_key'         => $proj_key,
                         'p_name'        => $proj_title,
