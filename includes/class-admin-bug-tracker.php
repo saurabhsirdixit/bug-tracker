@@ -186,6 +186,7 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                         <div class="div3">
                             <h2> Project peoples:-</h2>
                             <p> Here details of people related to this project</p>
+
                             <h4> Project Reporter:-</h4><?php echo $print->p_reporter; ?>
                             <h4> Project Assignee:-</h4><?php echo $print->p_assignee; ?>
                         </div>
@@ -459,7 +460,8 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                 
                
                
-                $proj_save = wp_insert_post(
+                $proj_save =  $wpdb->insert( 
+                    $table_name,
                     array(
                         'p_key'         => $proj_key,
                         'p_name'        => $proj_title,
