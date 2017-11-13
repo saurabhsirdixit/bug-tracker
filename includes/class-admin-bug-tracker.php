@@ -269,7 +269,7 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                                    }
                                }
 
-                        echo'</table>';     
+                        echo'</table>';   
                         } 
                  }
     }
