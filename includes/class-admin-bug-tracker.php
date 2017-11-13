@@ -465,8 +465,7 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                         'guid'              => $proj_hpage,
                         'ping_status'       => $proj_public,
                         'post_parent'       => $proj_type,
-                        'post_status'       => $proj_status,
-                        '' 
+                        'post_status'       => $proj_status, 
                         'meta_input'    => array(
                                     'key'   => $proj_key,
                                     'vale'  => $proj_assignee,
