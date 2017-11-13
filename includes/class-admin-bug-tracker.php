@@ -443,10 +443,8 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
     
     public static function bt_admin_add_project_form() {
         global $wpdb;
-        $table_name = $wpdb->prefix . 'projects';
-
-
-        if( isset( $_POST['proj_submit'] ) ) {
+       // $table_name = $wpdb->prefix . 'projects';
+         if( isset( $_POST['proj_submit'] ) ) {
            if ( isset( $_POST['project_title'] ) && !empty( $_POST['project_title'] ) ) {
                 $proj_title    = $_POST['project_title'];
                 $proj_desc     = $_POST['project_description'];
@@ -460,30 +458,21 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                 
                
                
-                $proj_save =  $wpdb->insert( 
-                    $table_name,
+                $proj_save =  wp_insert_post( 
                     array(
-                        'p_key'         => $proj_key,
-                        'p_name'        => $proj_title,
-                        'p_description' => $proj_desc, 
-                        'p_url'         => $proj_hpage,
-                        'p_public'      => $proj_public,
-                        'p_type'        => $proj_type,
-                        'p_status'      => $proj_status,
-                        'p_assignee'    => $proj_assignee,
-                        'p_reporter'    => $proj_reporter,
-                        ), 
-                    array( 
-                        '%s', 
-                        '%s',
-                        '%s',
-                        '%s',
-                        '%s',
-                        '%s',
-                        '%s',
-                        '%s',
-                        '%s',
-                        ) 
+                        'post_title'        => $proj_title,
+                        'post_content'      => $proj_desc, 
+                        'guid'              => $proj_hpage,
+                        'ping_status'       => $proj_public,
+                        'post_parent'       => $proj_type,
+                        'post_status'       => $proj_status,
+                        '' 
+                        'meta_input'    => array(
+                                    'key'   => $proj_key,
+                                    'vale'  => $proj_assignee,
+                                ))
+                        
+                   
                 );
 
                 if ( $proj_save === false ) {
@@ -597,7 +586,7 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
 
     public static function bt_admin_add_ticket_form() {
         global $wpdb;
-        $table_name = $wpdb->prefix . 'projects_ticket';
+        //$table_name = $wpdb->prefix . 'projects_ticket';
 
 
         if( isset( $_POST['proj_submit'] ) ) {
@@ -611,8 +600,8 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                 
                
                
-                $proj_save = $wpdb->insert( 
-                    $table_name, 
+                $proj_save = wp_insert_post( 
+                     
                     array(
                         'p_ticket_key'       => $proj_ticket_key,
                         'p_key'              => $proj_key,
@@ -620,15 +609,8 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                         'ticket_description' => $proj_desc, 
                         'p_ticket_status'    => $proj_status,
                         'p_ticket_assignee'  => $proj_assignee,
-                        ), 
-                    array( 
-                        '%s', 
-                        '%s',
-                        '%s',
-                        '%s',
-                        '%s',
-                        '%s',
-                        ) 
+
+                        )
                 );
 
                 if ( $proj_save === false ) {
@@ -971,22 +953,19 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
 
         global $wpdb;
 
-        $table_name = $wpdb->prefix . 'project_type';
+        //$table_name = $wpdb->prefix . 'project_type';
 
         if( isset( $_POST['proj_type_submit'] ) ) {
             if ( isset( $_POST['add_pro_type'] ) && !empty( $_POST['add_pro_type'] ) ) {
                 $proj_type_name = $_POST['add_pro_type'];
                 $proj_type_key  = preg_replace( '/\s+/', '_', strtolower( $proj_type_name ) );
-                $proj_type_save = $wpdb->insert( 
-                    $table_name, 
+                $proj_type_save = wp_insert_post(  
                     array( 
-                        'ptype_key' => $proj_type_key, 
-                        'ptype_name' => $proj_type_name,
-                    ), 
-                    array( 
-                        '%s', 
-                        '%s',
+                        'post_content' => $proj_type_key, 
+                        'post_title' => $proj_type_name,
+                        'post_type'=>'custom_post'
                     ) 
+                    
                 );
 
                 if ( $proj_type_save === false ) {
@@ -998,6 +977,8 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                 }
             }
         }
+        /*$id = wp_insert_post(array('post_title'=>'random', 'post_type'=>'custom_post', 'post_content'=>'demo text'));*/
+                
         /* Project type status*/
          $table_name = $wpdb->prefix . 'projects_status';
 
