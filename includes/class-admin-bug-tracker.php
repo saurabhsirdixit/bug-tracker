@@ -467,8 +467,9 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                         'post_parent'       => $proj_type,
                         'post_status'       => $proj_status,
                         'meta_input'    => array(
-                                    'key'   => $proj_key,
-                                    'vale'  => $proj_assignee,
+                                    'proj_key'   => $proj_key,
+                                    'assignee'  => $proj_assignee,
+                                    'reporter'  =>  $proj_reporter,
                                 ))
                         
                    
@@ -1014,7 +1015,7 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
             if ( isset( $_POST['add_pro_ticket'] ) && !empty( $_POST['add_pro_ticket'] ) ) {
                 $proj_type_name = $_POST['add_pro_ticket'];
                 $proj_type_key  = preg_replace( '/\s+/', '_', strtolower( $proj_type_name ) );
-                $proj_type_save = $wpdb->insert( 
+                $proj_type_save = $wpdb->wp_insert_pos( 
                     $table_name, 
                     array( 
                         'p_ticket_key'    => $proj_type_key, 
