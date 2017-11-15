@@ -470,8 +470,9 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                                     'proj_key'   => $proj_key,
                                     'assignee'  => $proj_assignee,
                                     'reporter'  =>  $proj_reporter,
+                                    ''
                                 ))
-                        
+                         
                    
                 );
 
