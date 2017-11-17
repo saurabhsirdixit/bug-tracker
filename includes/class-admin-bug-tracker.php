@@ -460,6 +460,7 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                
                 $proj_save =  wp_insert_post( 
                     array(
+                        'post_type'         => 'project',
                         'post_title'        => $proj_title,
                         'post_content'      => $proj_desc, 
                         'guid'              => $proj_hpage,
@@ -604,7 +605,8 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                 $proj_save = wp_insert_post( 
                      
                     array(
-                        'p_ticket_key'       => $proj_ticket_key,
+                        'post_type'          => 'ticket',   
+                        'p_ticket_key'       => $proj_ticket_ey,
                         'p_key'              => $proj_key,
                         'p_ticket_name'      => $proj_ticket_title,
                         'ticket_description' => $proj_desc, 
