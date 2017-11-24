@@ -1150,10 +1150,12 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
         wp_register_script( 'tb-bug-tracker-form-script-2', parent::$plugin_assets . 'js/custom-admin.js' );
         wp_register_script( 'tb-bug-tracker-form-script-3', parent::$plugin_assets . 'js/jquery.min.js' );
         wp_register_script( 'tb-bug-tracker-form-script-4', parent::$plugin_assets . 'js/bt_ajax.js' );
+        wp_register_script( 'tb-bug-tracker-form-script-5', parent::$plugin_assets . 'js/fetch_data.js' );
         wp_enqueue_script( 'tb-bug-tracker-form-script' );
         wp_enqueue_script( 'tb-bug-tracker-form-script-1' );
         wp_enqueue_script( 'tb-bug-tracker-form-script-2' );
         wp_enqueue_script( 'tb-bug-tracker-form-script-3' );
-         wp_enqueue_script( 'tb-bug-tracker-form-script-4' );
+        wp_enqueue_script( 'tb-bug-tracker-form-script-4' );
+        wp_enqueue_script( 'tb-bug-tracker-form-script-5' );
     }
 }
