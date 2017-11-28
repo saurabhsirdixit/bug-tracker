@@ -88,7 +88,7 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                     $p = $_GET['pid'];
                     global $wpdb;
                     $table_name = $wpdb->prefix . 'projects';
-                    $result = $wpdb->get_results( "SELECT * FROM $table_name where p_key = '$p'" );
+                    //$result = $wpdb->get_results( "SELECT * FROM $table_name where p_key = '$p'" );
                     foreach ( $result as $print ) {
                         ?>  <h1><center><?php echo $print->p_name; ?></center></h1>
                             <hr/>
@@ -966,7 +966,7 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                     array( 
                         'post_content' => $proj_type_key, 
                         'post_title' => $proj_type_name,
-                        'post_type'=>'custom_post'
+                        'post_type'=>'project_type'
                     ) 
                     
                 );
