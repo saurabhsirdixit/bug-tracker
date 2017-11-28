@@ -265,4 +265,7 @@ span.required::after {
     padding-left: 50px;
     margin-top:1%;
 }
+.container th {
+    background-color: #f1f1f1;
+}
 

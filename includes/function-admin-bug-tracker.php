@@ -24,7 +24,6 @@ function get_project_type() {
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'project_type';
 	$get_project_type = $wpdb->get_results( "SELECT id, ptype_key, ptype_name FROM ".$table_name );
-
 	return $get_project_type; 
 
 }

@@ -463,14 +463,14 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                         'post_type'         => 'project',
                         'post_title'        => $proj_title,
                         'post_content'      => $proj_desc, 
-                        'guid'              => $proj_hpage,
                         'ping_status'       => $proj_public,
-                        'post_parent'       => $proj_type,
                         'post_status'       => $proj_status,
                         'meta_input'    => array(
-                                    'proj_key'   => $proj_key,
-                                    'assignee'  => $proj_assignee,
-                                    'reporter'  =>  $proj_reporter,
+                                    'proj_key'      => $proj_key,
+                                    'assignee'      => $proj_assignee,
+                                    'reporter'      =>  $proj_reporter,
+                                    'poj_url'       => $proj_hpage,
+                                    'project_type'  => $proj_type,
                                     
                                 ))
                          
@@ -962,12 +962,12 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
             if ( isset( $_POST['add_pro_type'] ) && !empty( $_POST['add_pro_type'] ) ) {
                 $proj_type_name = $_POST['add_pro_type'];
                 $proj_type_key  = preg_replace( '/\s+/', '_', strtolower( $proj_type_name ) );
-                $proj_type_save = wp_insert_post(  
-                    array( 
-                        'post_content' => $proj_type_key, 
-                        'post_title' => $proj_type_name,
-                        'post_type'=>'project_type'
-                    ) 
+                 $proj_type_save = $wpdb->insert( 
+                    $table_name,
+                    array(
+                        'ptype_key' => $proj_type_key, 
+                        'ptype_name'     => $proj_type_name,
+                        )
                     
                 );
 
