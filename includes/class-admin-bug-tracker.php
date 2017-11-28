@@ -87,16 +87,38 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                   if( isset( $_GET['pid'] ) ) {
                     $p = $_GET['pid'];
                     global $wpdb;
-                    $table_name = $wpdb->prefix . 'projects';
+                    //wp_reset_query();
+                    $args = array (
+                        'post_type' => 'project',
+                        //'order' => 'ASC',
+                        //'orderby' => 'post_date',
+                        'post_status'      => 'publish',
+                        'meta_key'         => 'event_post_status',
+                        //'posts_per_page'   => '10',
+                        'meta_value'       => array ('slider')  //'meta_value'       => array ('complete','slider')
+                    );
+                    $result = get_posts( $args );
+                    echo $result;
+                    echo "hello";
+                    /*if (have_posts()) : while (have_posts()) : the_post(); 
+                            $event_name_ics = get_the_title();
+                            $event_ics_file_name = $post->post_name;
+                            $event_time_start = get_post_meta($post->ID,'event_post_time_start',true);
+                            $event_time_end = get_post_meta($post->ID,'event_post_time_end',true);
+                            $event_date = get_post_meta($post->ID,'event_post_date',true);
+                            $event_location = get_post_meta($post->ID,'event_post_location',true);*/
+
+                   // $table_name = $wpdb->prefix . 'projects';
                     //$result = $wpdb->get_results( "SELECT * FROM $table_name where p_key = '$p'" );
-                    foreach ( $result as $print ) {
-                        ?>  <h1><center><?php echo $print->p_name; ?></center></h1>
+                    foreach ( $result as $print ) { 
+                            ?>  <h1><center><?php echo $print->p_name; ?></center></h1>
                             <hr/>
                             <div class="div1">
                                 <table>
                                     <tr>
                                       <Th COLSPAN="2">
-                                            <h3><BR>Project Detils </h3>
+                                            <h3>Project Detils </h3>
+                                            
                                      </Th>  
 
                                     </tr>
@@ -110,8 +132,8 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                                                     <td><?php echo $print->p_name; ?></td>
                                             </tr>
                                             <tr>
-                                                    <td> Description: </td>
-                                                    <td><?php echo $print->p_description; ?></td>
+                                                    <td> Description:</td>
+                                                    <td><?php echo $print->p_description;?></td>
                                             </tr>
                                             <tr>
                                                     <td>URL:</td>
@@ -221,8 +243,20 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                 }
                 else{                   
                         global $wpdb;
-                        $table_name = $wpdb->prefix . 'projects';
-                        $result = $wpdb->get_results( "SELECT * FROM $table_name" );
+                        $args = array (
+                        'post_type'        => 'project',
+                        'post_status'      => 'done',
+                        //'meta_key'         => 'proj_key'
+                        
+                    );
+                    $result = new wp_query ( $args );
+                     the_title();
+                    //var_dump( $result );                   
+                        //$count_posts = wp_count_posts( $post_type = 'project' );
+                        //echo $count_post;
+                        //$table_name = $wpdb->prefix . 'project';
+                        //$result = $wpdb->get_results( "SELECT * FROM $table_name" );
+                        echo '<table><tr><td><a href="#" class="page-title-action"><h2> Add Ticket </h2></a></td></tr></table>';
                         echo'<table class="container">
                             <thead>
                                 <tr>
@@ -237,7 +271,7 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                                         <th><h1>Reporter</h1></th>
                                         <th><h1>Edit</h1></th>
                                         <th><h1>view</h1></th>
-                                        
+
                                 </tr>
                             </thead>';
                             foreach ( $result as $print )   {
@@ -245,7 +279,7 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                                     <tr>
                                             <td><?php echo $print->id; ?></td>
 
-                                            <td><?php echo $print->p_name; ?></td>
+                                            <td><?php echo $print->project_title; ?></td>
 
                                             <td><?php echo $print->p_description; ?></td>
 
@@ -292,7 +326,7 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                              <div class="div1">
                                 <table>
                                     <Th COLSPAN="2">
-                                        <h3>Ticket Detils </h3>
+                                        <h3>Ticket detalis </h3>
                                     </Th>
                                         
                                         
@@ -468,7 +502,7 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                         'meta_input'    => array(
                                     'proj_key'      => $proj_key,
                                     'assignee'      => $proj_assignee,
-                                    'reporter'      =>  $proj_reporter,
+                                    'reporter'      => $proj_reporter,
                                     'poj_url'       => $proj_hpage,
                                     'project_type'  => $proj_type,
                                     
@@ -956,7 +990,7 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
 
         global $wpdb;
 
-        //$table_name = $wpdb->prefix . 'project_type';
+        $table_name = $wpdb->prefix . 'project_type';
 
         if( isset( $_POST['proj_type_submit'] ) ) {
             if ( isset( $_POST['add_pro_type'] ) && !empty( $_POST['add_pro_type'] ) ) {
