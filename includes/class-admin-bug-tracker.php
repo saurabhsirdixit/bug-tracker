@@ -92,10 +92,10 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                         'post_type' => 'project',
                         //'order' => 'ASC',
                         //'orderby' => 'post_date',
-                        'post_status'      => 'publish',
-                        'meta_key'         => 'event_post_status',
+                        'post_status'      => 'done',
+                        'meta_key'         => '',
                         //'posts_per_page'   => '10',
-                        'meta_value'       => array ('slider')  //'meta_value'       => array ('complete','slider')
+                        'meta_value'       => array ('')  //'meta_value'       => array ('complete','slider')
                     );
                     $result = get_posts( $args );
                     echo $result;
@@ -250,12 +250,13 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                         
                     );
                     $result = new wp_query ( $args );
-                     the_title();
-                    //var_dump( $result );                   
-                        //$count_posts = wp_count_posts( $post_type = 'project' );
-                        //echo $count_post;
-                        //$table_name = $wpdb->prefix . 'project';
-                        //$result = $wpdb->get_results( "SELECT * FROM $table_name" );
+                    echo the_title();
+                    echo  
+                    var_dump( $result );                   
+                        $count_posts = wp_count_posts( $post_type = 'project' );
+                        echo $count_post;
+                        $table_name = $wpdb->prefix . 'project';
+                        $result = $wpdb->get_results( "SELECT * FROM $table_name" );
                         echo '<table><tr><td><a href="#" class="page-title-action"><h2> Add Ticket </h2></a></td></tr></table>';
                         echo'<table class="container">
                             <thead>
@@ -276,6 +277,7 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                             </thead>';
                             foreach ( $result as $print )   {
                                     ?> 
+                                    <?php the_title('<h2>','</h2>'); ?>
                                     <tr>
                                             <td><?php echo $print->id; ?></td>
 
