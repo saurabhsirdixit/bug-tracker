@@ -99,7 +99,6 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                     );
                     $result = get_posts( $args );
                     echo $result;
-                    echo "hello";
                     /*if (have_posts()) : while (have_posts()) : the_post(); 
                             $event_name_ics = get_the_title();
                             $event_ics_file_name = $post->post_name;
@@ -250,11 +249,20 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                         
                     );
                     $result = new wp_query ( $args );
-                    echo the_title();
-                    echo  
-                    var_dump( $result );                   
-                        $count_posts = wp_count_posts( $post_type = 'project' );
-                        echo $count_post;
+
+                    while ( have_posts() ): the_post();
+                            // Display post
+                            if ( have_posts() ): // If this is the last post, the loop will start over
+                                    // Do something if this isn't the last post
+                            echo the_title();
+                            endif;
+                    endwhile;
+
+                    foreach ( $result as $print )   {
+                                 
+                                    //var_dump($print);
+                                }
+                    //var_dump( $result );                   
                         $table_name = $wpdb->prefix . 'project';
                         $result = $wpdb->get_results( "SELECT * FROM $table_name" );
                         echo '<table><tr><td><a href="#" class="page-title-action"><h2> Add Ticket </h2></a></td></tr></table>';
@@ -277,7 +285,7 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                             </thead>';
                             foreach ( $result as $print )   {
                                     ?> 
-                                    <?php the_title('<h2>','</h2>'); ?>
+                                    <?php var_dump($print); ?>
                                     <tr>
                                             <td><?php echo $print->id; ?></td>
 
@@ -355,10 +363,11 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                             </div>
                         </div>
                           <?php
- }}                     }
+                     }
     
 }
             /** View ticket page end**/
+
  /* function View comment */
     public static function bt_view_comments(){
         if( !current_user_can( 'manage_options' ) ){
@@ -503,7 +512,7 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                         'post_status'       => $proj_status,
                         'meta_input'    => array(
                                     'proj_key'      => $proj_key,
-                                    'assignee'      => $proj_assignee,
+                                    'assignee'      => $proj_assig0nee,
                                     'reporter'      => $proj_reporter,
                                     'poj_url'       => $proj_hpage,
                                     'project_type'  => $proj_type,
@@ -1072,7 +1081,7 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                 } else {
                     self::$msg          = 'Added new project type!!';
                     self::$msg_class    = 'success';
-                }
+                }}}}
             }
         }
         echo'<div id="statictabs" class="tabs">

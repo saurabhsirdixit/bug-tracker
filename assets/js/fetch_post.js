@@ -25,7 +25,7 @@
                     type: "GET",
                     url: "/wordpress/wp-admin/admin-ajax.php",
                     dataType: 'html',
-                    data: ({ action: 'loadMore', id: id, firstname: firstname, surname: surname, posts: posts, category: category}),
+                    data: ({ action: 'loadMore', id: id, post_name: post_name, post_title: ppost_titile}),
                     success: function(data){
                         $('#ajax_results_container').hide().fadeIn('slow').html(data);
                         posts = posts + 4;
