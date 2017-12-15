@@ -406,11 +406,12 @@ class TB_Admin_Bug_Tracker extends Tb_Bug_Tracker {
                     array(
                         't_discription_key'     => '',
                         'p_ticket_key'          => $p_ticket_name,
-                        'ticket_description'    => $ticket_comments,
-                        'ticket_id'             => $ticket_comments,
-                        'ticket_uid'            => $ticket_comments,
-                        'ticket_user'           => $ticket_comments,
-                        'ticket_user_Comments'  => $ticket_comments, 
+                        'ticket_description'    => $ticket_description,
+                        'ticket_id'             => $ticket_id,
+                        'ticket_uid'            => $ticket_uid,
+                        'ticket_user'           => $ticket_user,
+                        'ticket_user_Comments'  => $ticket_user_comments,
+                        'tickket_comment'   =>$ticket_commnets 
                         ), 
                     array( 
                         '%s', 
